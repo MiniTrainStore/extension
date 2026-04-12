@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import Card from "@/components/ui/card/Card.vue";
 import CardHeader from "@/components/ui/card/CardHeader.vue";
-import CardTitle from "@/components/ui/card/CardTitle.vue";
-import CardDescription from "@/components/ui/card/CardDescription.vue";
 import CardContent from "@/components/ui/card/CardContent.vue";
 
 import Separator from "@/components/ui/separator/Separator.vue";
@@ -10,26 +8,46 @@ import Tabs from "@/components/ui/tabs/Tabs.vue";
 import TabsList from "@/components/ui/tabs/TabsList.vue";
 import TabsTrigger from "@/components/ui/tabs/TabsTrigger.vue";
 import TabsContent from "@/components/ui/tabs/TabsContent.vue";
+import { Button } from "@/components/ui/button";
 import ProductsTab from "@/components/ProductsTab.vue";
 import SettingsTab from "@/components/SettingsTab.vue";
 import { storageRef } from "@/utilities/browser";
+import ExtensionHeader from "@/components/ExtensionHeader.vue";
 
 const currentTab = storageRef("currentTab", 0);
 
 const tabs = ["Produits", "Réglages"];
+
+async function openInSeparateWindow() {
+  await browser.windows.create({
+    url: browser.runtime.getURL("/main.html"),
+    type: "popup",
+    state: "maximized",
+  });
+}
 </script>
 
 <template>
-  <Card class="w-160 h-auto border-0">
+  <Card
+    class="w-full max-w-160 h-full border-0 flex flex-col box-border overflow-hidden"
+  >
     <CardHeader>
-      <div class="flex items-center gap-2">
-        <img src="/icon.svg" alt="Icon" class="h-6" />
-        <CardTitle>Mini Train Store</CardTitle> -
-        <CardDescription>Gestion des profils et des annonces</CardDescription>
-      </div>
+      <ExtensionHeader>
+        <Button
+          class="ml-auto"
+          variant="outline"
+          @click="openInSeparateWindow()"
+        >
+          Ouvrir en fenetre
+        </Button>
+      </ExtensionHeader>
     </CardHeader>
-    <CardContent>
-      <Tabs v-model="currentTab" :default-value="0" class="w-full h-full">
+    <CardContent class="flex-1 min-h-0">
+      <Tabs
+        v-model="currentTab"
+        :default-value="0"
+        class="w-full h-full min-h-0"
+      >
         <TabsList class="w-full">
           <TabsTrigger
             v-for="[index, tab] in tabs.entries()"

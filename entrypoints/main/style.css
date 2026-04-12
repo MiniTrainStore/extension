@@ -1,0 +1,11 @@
+@import "~/assets/tailwind.css";
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
