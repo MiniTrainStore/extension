@@ -18,7 +18,7 @@
     "lint:fix": "eslint . --ext .ts,.vue --fix"
   },
   "dependencies": {
-    "@vueuse/core": "^14.2.1",
+    "@vueuse/core": "^15.0.0",
     "chrono-node": "^2.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
